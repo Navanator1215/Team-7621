@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {{ bootstrap.load_css() }}
+</head>
+<body>
+    <h1>Discroll's R&D Platform</h1>
+
+    <h2>Create Trial</h2>
+    <div class="card p-3 shadow-sm">
+  <form action="/create_trial" method="POST" enctype="multipart/form-data">
+
+    <div class="row g-2 align-items-end">
+
+      <div class="col-md-4">
+        <input type="text" class="form-control"
+               placeholder="Enter crop name"
+               name="crop" required>
+      </div>
+
+      <div class="col-md-4">
+        <input type="text" class="form-control"
+               placeholder="Enter location"
+               name="location" required>
+      </div>
+
+      <div class="col-md-3">
+        <select class="form-select" name="status" required>
+          <option selected disabled value="">Select status</option>
+          <option value="active">Active</option>
+          <option value="planned">Planned</option>
+          <option value="completed">Completed</option>
+        </select>
+      </div>
+
+      <div class="col-md-1 d-grid">
+        <button type="submit" class="btn btn-primary">
+          Add Trial
+        </button>
+      </div>
+
+      <div class="col-12 mt-3">
+        <input type="file" name="media" class="form-control">
+      </div>
+
+    </div>
+  </form>
+</div>
+</body>
+</html>

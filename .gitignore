@@ -1,0 +1,19 @@
+# Python related
+*.pyc
+__pycache__/
+instance/
+
+# Flask specific
+*.db
+*.sqlite3
+
+# IDEs and text editors
+.vscode/
+.idea/
+
+# Operating system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log

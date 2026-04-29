@@ -23,6 +23,14 @@ def create_trial():
         "status": request.form.get('status', "Active")
     }
 
-    requests.post(API_URL, data=trial)
+    media = request.files.get("media")
+
+    files = {}
+
+    if media and media.filename:
+
+        files["media"] = (media.filename, media.stream, media.mimetype)
+
+    requests.post(API_URL, data=trial, files=files)
 
     return redirect('/')

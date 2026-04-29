@@ -9,7 +9,7 @@ const emptyForm = {
   location: "",
   objective: "",
   season: "",
-  status: "",
+  status: "Active",
   notes: "",
 };
 

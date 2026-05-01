@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Driscoll's R&D Platform</title>
-    {{ bootstrap.load_css() }}
-
-    <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Driscoll's R&D Platform</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   <style>
         body {
             background: #f4f7fb;
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -101,87 +100,24 @@
         }
     </style>
 </head>
-<body>
+<body class="bg-light">
+  <div class="container py-4">
+    <h1 class="text-center mb-2">Driscoll's R&D Platform</h1>
+    <p class="text-center text-muted mb-4">
+      Manage and analyze agricultural field trials
+    </p>
 
-    <header class="page-header">
-        <div class="container">
-            <h1>Driscoll's R&D Platform</h1>
-            <p>Manage agricultural trials, locations, media, and trial status in one place.</p>
-        </div>
-    </header>
+    {% include "partials/summary_cards.html" %}
+    {% include "partials/trial_form.html" %}
 
-    <main class="container content-wrapper">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="mb-0">Field Trials</h2>
+    </div>
 
-        <div class="row g-4 mb-4">
-            <div class="col-md-4">
-                <div class="card dashboard-card stat-card">
-                    <div class="stat-label">Total Trials</div>
-                    <p class="stat-value">
-                        {% if trials %}
-                            {{ trials|length }}
-                        {% else %}
-                            0
-                        {% endif %}
-                    </p>
-                </div>
-            </div>
-        </div>
+    {% include "partials/search_filter.html" %}
+    {% include "partials/trial_table.html" %}
+  </div>
 
-        <div class="card dashboard-card form-card">
-            <h2 class="section-title">Create Trial</h2>
-
-            <form action="/create_trial" method="POST" enctype="multipart/form-data">
-                <div class="row g-3">
-
-                    <div class="col-md-6">
-                        <label class="form-label">Crop</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="crop"
-                            placeholder="Enter crop name"
-                            required
-                        >
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Location</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="location"
-                            placeholder="Enter trial location"
-                            required
-                        >
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Status</label>
-                        <select class="form-select" name="status" required>
-                            <option selected disabled value="">Select status</option>
-                            <option value="active">Active</option>
-                            <option value="planned">Planned</option>
-                            <option value="completed">Completed</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label">Upload Media</label>
-                        <input type="file" name="media" class="form-control">
-                        <div class="upload-note mt-1">Optional image or video for this trial.</div>
-                    </div>
-
-                    <div class="col-12 d-grid d-md-flex justify-content-md-end mt-3">
-                        <button type="submit" class="btn btn-primary px-4">
-                            Add Trial
-                        </button>
-                    </div>
-
-                </div>
-            </form>
-        </div>
-
-    </main>
-
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -168,7 +168,7 @@
                     <div class="col-md-6">
                         <label class="form-label">Upload Media</label>
                         <input type="file" name="media" class="form-control">
-                        <div class="upload-note mt-1">Optional image or video for this trial.</div>
+                        <div class="upload-note mt-1">Upload an image or video for this trial.</div>
                     </div>
 
                     <div class="col-12 d-grid d-md-flex justify-content-md-end mt-3">
@@ -180,6 +180,45 @@
                 </div>
             </form>
         </div>
+
+        <br>
+         <div class="card dashboard-card form-card">
+         <h2 class="section-title">Existing Trials</h2>
+
+         {% if trials %}
+             <div class="table-responsive">
+                 <table class="table table-striped">
+                     <thead>
+                         <tr>
+                             <th scope="col">Crop</th>
+                             <th scope="col">Location</th>
+                             <th scope="col">Status</th>
+                             <th scope="col">Media</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                         {% for trial in trials %}
+                             <tr>
+                                 <td>{{ trial.crop }}</td>
+                                 <td>{{ trial.location }}</td>
+                                 <td>{{ trial.status }}</td>
+                                 <td>
+                                     {% if trial.media_filename %}
+                                          <img src="http://127.0.0.1:8000/uploads/{{ trial.media_filename }}" width="120">
+                                     {% else %}
+                                         No media
+                                     {% endif %}
+                                 </td>
+                             </tr>
+                         {% endfor %}
+                     </tbody>
+                 </table>
+             </div>
+         {% else %}
+             <p>No trials found. Start by creating a new trial above.</p>
+         {% endif %}
+
+         </div>
 
     </main>
 

@@ -1,0 +1,92 @@
+<h2 class="mb-3">Create Trial</h2>
+
+<div class="card p-3 shadow-sm mb-4">
+
+  <form action="{{ url_for('create_trial') }}" method="POST" enctype="multipart/form-data">
+
+    <div class="row g-3">
+
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Crop"
+          name="crop"
+          required
+        />
+      </div>
+
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Variety"
+          name="variety"
+        />
+      </div>
+
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Location"
+          name="location"
+          required
+        />
+      </div>
+
+      <div class="col-md-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Season"
+          name="season"
+        />
+      </div>
+
+      <div class="col-md-6">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Objective"
+          name="objective"
+        />
+      </div>
+
+      <div class="col-md-3">
+        <select class="form-select" name="status">
+          <option value="Active">Active</option>
+          <option value="Planned">Planned</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+
+      <div class="col-md-3">
+        <input
+          type="file"
+          name="media"
+          class="form-control"
+          accept="image/*,video/*"
+        />
+      </div>
+
+      <div class="col-12">
+        <textarea
+          class="form-control"
+          name="notes"
+          placeholder="Notes"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div class="col-12 text-end">
+        <button type="submit" class="btn btn-primary">
+          Add Trial
+        </button>
+      </div>
+
+    </div>
+
+  </form>
+
+</div>

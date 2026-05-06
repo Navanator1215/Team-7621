@@ -1,0 +1,60 @@
+<div class="card p-3 shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>Crop</th>
+          <th>Variety</th>
+          <th>Location</th>
+          <th>Objective</th>
+          <th>Status</th>
+          <th>Media</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if trials %}
+          {% for trial in trials %}
+            <tr>
+              <td>{{ trial.crop }}</td>
+              <td>{{ trial.variety or "-" }}</td>
+              <td>{{ trial.location }}</td>
+              <td>{{ trial.objective or "-" }}</td>
+              <td>{{ trial.status }}</td>
+              <td>
+                {% if trial.media_type == "image" and trial.media_url %}
+                  <img
+                    src="{{ trial.media_url }}"
+                    alt="{{ trial.crop }}"
+                    width="100"
+                    class="rounded"
+                  />
+                {% elif trial.media_type == "video" and trial.media_url %}
+                  <video width="140" controls>
+                    <source src="{{ trial.media_url }}">
+                    Your browser does not support video.
+                  </video>
+                {% else %}
+                  <span class="text-muted">No media</span>
+                {% endif %}
+              </td>
+              <td>
+                <form action="{{ url_for('delete_trial', trial_id=trial.id) }}" method="POST">
+                  <button type="submit" class="btn btn-danger btn-sm">
+                    Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="7" class="text-center text-muted py-4">
+              No trials found.
+            </td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>

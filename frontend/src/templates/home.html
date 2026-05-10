@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Driscoll's R&D Platform</title>
-    {{ bootstrap.load_css() }}
-
-    <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Driscoll's R&D Platform</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   <style>
         body {
             background: #f4f7fb;
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -231,5 +230,25 @@
 
     </main>
 
+<body class="bg-light">
+  <div class="container py-4">
+    <h1 class="text-center mb-2">Driscoll's R&D Platform</h1>
+    <p class="text-center text-muted mb-4">
+      Manage and analyze agricultural field trials
+    </p>
+
+    {% include "partials/summary_cards.html" %}
+    {% include "partials/trial_form.html" %}
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="mb-0">Field Trials</h2>
+    </div>
+
+    {% include "partials/search_filter.html" %}
+    {% include "partials/trial_table.html" %}
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

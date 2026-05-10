@@ -1,37 +1,99 @@
-from flask import Flask, render_template, request, redirect
-from flask_bootstrap import Bootstrap5
+from flask import Flask, render_template, request, redirect, url_for
 import requests
 
 app = Flask(__name__)
-bootstrap = Bootstrap5(app)
 
 API_URL = "http://127.0.0.1:8000/trials"
 
 
-@app.route('/')
+@app.route("/")
 def home():
-    res = requests.get(API_URL)
-    trials = res.json()
-    return render_template('home.html', trials=trials)
+    # keep original text for display
+    search = request.args.get("search", "").strip()
+    status_filter = request.args.get("status", "All").strip()
+
+    # lowercase version only for filtering
+    search_lower = search.lower()
+
+    try:
+        res = requests.get(API_URL)
+        res.raise_for_status()
+        trials = res.json()
+    except requests.exceptions.RequestException:
+        trials = []
+
+    filtered_trials = []
+
+    for trial in trials:
+        crop = str(trial.get("crop", "")).lower()
+        variety = str(trial.get("variety", "")).lower()
+        location = str(trial.get("location", "")).lower()
+        objective = str(trial.get("objective", "")).lower()
+        status = str(trial.get("status", ""))
+
+        matches_search = (
+            search_lower in crop
+            or search_lower in variety
+            or search_lower in location
+            or search_lower in objective
+        )
+
+        matches_status = status_filter == "All" or status == status_filter
+
+        if matches_search and matches_status:
+            filtered_trials.append(trial)
+
+    # summary (keep based on ALL trials, not filtered)
+    total = len(trials)
+    active = len([t for t in trials if t.get("status") == "Active"])
+    completed = len([t for t in trials if t.get("status") == "Completed"])
+    locations = len(set(t.get("location") for t in trials if t.get("location")))
+
+    return render_template(
+        "home.html",
+        trials=filtered_trials,
+        total=total,
+        active=active,
+        completed=completed,
+        locations=locations,
+        search=search,  # original value preserved
+        status_filter=status_filter,
+    )
 
 
-@app.route('/create_trial', methods=['POST'])
+@app.route("/create_trial", methods=["POST"])
 def create_trial():
-    trial = {
-        "crop": request.form['crop'],
-        "location": request.form['location'],
-        "status": request.form.get('status', "Active")
+    form_data = {
+        "crop": request.form.get("crop", "").strip(),
+        "variety": request.form.get("variety", "").strip(),
+        "location": request.form.get("location", "").strip(),
+        "objective": request.form.get("objective", "").strip(),
+        "season": request.form.get("season", "").strip(),
+        "status": request.form.get("status", "Active").strip(),
+        "notes": request.form.get("notes", "").strip(),
     }
 
-    media = request.files.get("media")
-
     files = {}
-
+    media = request.files.get("media")
     if media and media.filename:
-
         files["media"] = (media.filename, media.stream, media.mimetype)
 
-    requests.post(API_URL, data=trial, files=files)
+    try:
+        requests.post(API_URL, data=form_data, files=files)
+    except requests.exceptions.RequestException:
+        pass
+
+    return redirect(url_for("home"))
+
+
+@app.route("/delete_trial/<int:trial_id>", methods=["POST"])
+def delete_trial(trial_id):
+    try:
+        requests.delete(f"{API_URL}/{trial_id}")
+    except requests.exceptions.RequestException:
+        pass
+
+    return redirect(url_for("home"))
 
     return redirect('/')
 
@@ -71,3 +133,7 @@ def update_trial(trial_id):
     requests.put(f"{API_URL}/{trial_id}", json=updated_trial)
 
     return redirect('/')
+
+if __name__ == "__main__":
+    app.run(debug=True, host="127.0.0.1", port=5000)
+

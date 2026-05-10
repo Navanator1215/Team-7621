@@ -1,0 +1,32 @@
+<div class="card p-3 shadow-sm mb-3">
+  <form method="GET" action="{{ url_for('home') }}">
+    <div class="row g-2">
+      <div class="col-md-7">
+        <input
+          type="text"
+          class="form-control"
+          name="search"
+          placeholder="Search crop, variety, location, objective..."
+          value="{{ search }}"
+        />
+      </div>
+
+      <div class="col-md-3">
+        <select class="form-select" name="status">
+          <option value="All" {% if status_filter == "All" %}selected{% endif %}>All Statuses</option>
+          <option value="Active" {% if status_filter == "Active" %}selected{% endif %}>Active</option>
+          <option value="Completed" {% if status_filter == "Completed" %}selected{% endif %}>Completed</option>
+          <option value="Planned" {% if status_filter == "Planned" %}selected{% endif %}>Planned</option>
+        </select>
+      </div>
+
+      <div class="col-md-1 d-grid">
+        <button type="submit" class="btn btn-dark">Go</button>
+      </div>
+
+      <div class="col-md-1 d-grid">
+        <a href="{{ url_for('home') }}" class="btn btn-secondary">Reset</a>
+      </div>
+    </div>
+  </form>
+</div>

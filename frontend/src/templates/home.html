@@ -194,6 +194,7 @@
                              <th scope="col">Location</th>
                              <th scope="col">Status</th>
                              <th scope="col">Media</th>
+                             <th scope="col">Actions</th>
                          </tr>
                      </thead>
                      <tbody>
@@ -208,6 +209,14 @@
                                      {% else %}
                                          No media
                                      {% endif %}
+                                 </td>
+
+                                 <td>
+                                        <form action="/delete_trial/{{ trial.id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this trial?');">
+                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+
+                                        <a href="/edit_trial/{{ trial.id }}" class="btn btn-sm btn-success">Edit </a>
                                  </td>
                              </tr>
                          {% endfor %}

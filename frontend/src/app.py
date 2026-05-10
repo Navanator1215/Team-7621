@@ -34,3 +34,40 @@ def create_trial():
     requests.post(API_URL, data=trial, files=files)
 
     return redirect('/')
+
+
+@app.route('/delete_trial/<int:trial_id>', methods=['POST'])
+def delete_trial(trial_id):
+    requests.delete(f"{API_URL}/{trial_id}")
+    return redirect('/')
+
+
+@app.route('/edit_trial/<int:trial_id>')
+def edit_trial(trial_id):
+    res = requests.get(API_URL)
+
+    trials = res.json()
+
+    trial_to_edit = None
+
+    for trial in trials:
+
+        if trial["id"] == trial_id:
+
+            trial_to_edit = trial
+
+            break
+
+    return render_template('edit.html', trial=trial_to_edit)
+
+@app.route('/update_trial/<int:trial_id>', methods=['POST'])
+def update_trial(trial_id):
+    updated_trial = {
+        "crop": request.form['crop'],
+        "location": request.form['location'],
+        "status": request.form['status']
+    }
+
+    requests.put(f"{API_URL}/{trial_id}", json=updated_trial)
+
+    return redirect('/')

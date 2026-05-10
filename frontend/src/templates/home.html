@@ -100,6 +100,136 @@
         }
     </style>
 </head>
+<body>
+
+    <header class="page-header">
+        <div class="container">
+            <h1>Driscoll's R&D Platform</h1>
+            <p>Manage agricultural trials, locations, media, and trial status in one place.</p>
+        </div>
+    </header>
+
+    <main class="container content-wrapper">
+
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <div class="card dashboard-card stat-card">
+                    <div class="stat-label">Total Trials</div>
+                    <p class="stat-value">
+                        {% if trials %}
+                            {{ trials|length }}
+                        {% else %}
+                            0
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card dashboard-card form-card">
+            <h2 class="section-title">Create Trial</h2>
+
+            <form action="/create_trial" method="POST" enctype="multipart/form-data">
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label">Crop</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="crop"
+                            placeholder="Enter crop name"
+                            required
+                        >
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Location</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="location"
+                            placeholder="Enter trial location"
+                            required
+                        >
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Status</label>
+                        <select class="form-select" name="status" required>
+                            <option selected disabled value="">Select status</option>
+                            <option value="active">Active</option>
+                            <option value="planned">Planned</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Upload Media</label>
+                        <input type="file" name="media" class="form-control">
+                        <div class="upload-note mt-1">Upload an image or video for this trial.</div>
+                    </div>
+
+                    <div class="col-12 d-grid d-md-flex justify-content-md-end mt-3">
+                        <button type="submit" class="btn btn-primary px-4">
+                            Add Trial
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+        <br>
+         <div class="card dashboard-card form-card">
+         <h2 class="section-title">Existing Trials</h2>
+
+         {% if trials %}
+             <div class="table-responsive">
+                 <table class="table table-striped">
+                     <thead>
+                         <tr>
+                             <th scope="col">Crop</th>
+                             <th scope="col">Location</th>
+                             <th scope="col">Status</th>
+                             <th scope="col">Media</th>
+                             <th scope="col">Actions</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                         {% for trial in trials %}
+                             <tr>
+                                 <td>{{ trial.crop }}</td>
+                                 <td>{{ trial.location }}</td>
+                                 <td>{{ trial.status }}</td>
+                                 <td>
+                                     {% if trial.media_filename %}
+                                          <img src="http://127.0.0.1:8000/uploads/{{ trial.media_filename }}" width="120">
+                                     {% else %}
+                                         No media
+                                     {% endif %}
+                                 </td>
+
+                                 <td>
+                                        <form action="/delete_trial/{{ trial.id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this trial?');">
+                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+
+                                        <a href="/edit_trial/{{ trial.id }}" class="btn btn-sm btn-success">Edit </a>
+                                 </td>
+                             </tr>
+                         {% endfor %}
+                     </tbody>
+                 </table>
+             </div>
+         {% else %}
+             <p>No trials found. Start by creating a new trial above.</p>
+         {% endif %}
+
+         </div>
+
+    </main>
+
 <body class="bg-light">
   <div class="container py-4">
     <h1 class="text-center mb-2">Driscoll's R&D Platform</h1>
@@ -117,6 +247,7 @@
     {% include "partials/search_filter.html" %}
     {% include "partials/trial_table.html" %}
   </div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

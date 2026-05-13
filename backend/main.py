@@ -84,15 +84,30 @@ def create_trial():
 @app.route("/trials/<int:trial_id>", methods=["PUT"])
 def update_trial(trial_id):
     trial = Trial.query.get_or_404(trial_id)
-    data = request.get_json()
 
-    trial.crop = data.get("crop", trial.crop)
-    trial.variety = data.get("variety", trial.variety)
-    trial.location = data.get("location", trial.location)
-    trial.objective = data.get("objective", trial.objective)
-    trial.season = data.get("season", trial.season)
-    trial.status = data.get("status", trial.status)
-    trial.notes = data.get("notes", trial.notes)
+    trial.crop = request.form.get("crop", trial.crop).strip()
+    trial.variety = request.form.get("variety", trial.variety).strip()
+    trial.location = request.form.get("location", trial.location).strip()
+    trial.objective = request.form.get("objective", trial.objective).strip()
+    trial.season = request.form.get("season", trial.season).strip()
+    trial.status = request.form.get("status", trial.status).strip()
+    trial.notes = request.form.get("notes", trial.notes).strip()
+
+    media = request.files.get("media")
+
+    if media and media.filename:
+        media_filename = secure_filename(media.filename)
+        save_path = os.path.join(app.config["UPLOAD_FOLDER"], media_filename)
+        media.save(save_path)
+
+        trial.media_filename = media_filename
+
+        if media.mimetype.startswith("image/"):
+            trial.media_type = "image"
+        elif media.mimetype.startswith("video/"):
+            trial.media_type = "video"
+        else:
+            trial.media_type = "file"
 
     db.session.commit()
     return jsonify(trial.to_dict())

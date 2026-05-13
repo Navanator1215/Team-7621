@@ -28,7 +28,10 @@ This project simulates an R&D trial management platform for agricultural researc
 
 cd backend
 
-flask --app app.py --debug run --port 8000
+python3 -m venv venv
+source venv/bin/activate
+
+python main.py
 
 ```
 
@@ -40,7 +43,7 @@ Open a second terminal:
 
 cd frontend/src
 
-flask --app app.py --debug run
+python app.py
 
 ```
 

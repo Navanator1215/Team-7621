@@ -48,6 +48,7 @@ def home():
     active = len([t for t in trials if t.get("status") == "Active"])
     completed = len([t for t in trials if t.get("status") == "Completed"])
     locations = len(set(t.get("location") for t in trials if t.get("location")))
+    planned = len([t for t in trials if t.get("status") == "Planned"])
 
     return render_template(
         "home.html",
@@ -55,8 +56,9 @@ def home():
         total=total,
         active=active,
         completed=completed,
+        planned=planned,
         locations=locations,
-        search=search,  # original value preserved
+        search=search, 
         status_filter=status_filter,
     )
 
@@ -98,12 +100,6 @@ def delete_trial(trial_id):
     return redirect('/')
 
 
-@app.route('/delete_trial/<int:trial_id>', methods=['POST'])
-def delete_trial(trial_id):
-    requests.delete(f"{API_URL}/{trial_id}")
-    return redirect('/')
-
-
 @app.route('/edit_trial/<int:trial_id>')
 def edit_trial(trial_id):
     res = requests.get(API_URL)
@@ -124,13 +120,21 @@ def edit_trial(trial_id):
 
 @app.route('/update_trial/<int:trial_id>', methods=['POST'])
 def update_trial(trial_id):
-    updated_trial = {
+    trial_data = {
         "crop": request.form['crop'],
         "location": request.form['location'],
-        "status": request.form['status']
+        "status": request.form['status'],
+        "objective": request.form.get("objective"),
+        "notes": request.form.get("notes")
     }
 
-    requests.put(f"{API_URL}/{trial_id}", json=updated_trial)
+    media = request.files.get("media")
+
+    files = {}
+    if media and media.filename:
+        files["media"] = (media.filename, media.stream, media.mimetype)
+
+    requests.put(f"{API_URL}/{trial_id}", data=trial_data, files=files)
 
     return redirect('/')
 

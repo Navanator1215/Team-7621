@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Trial</title>
-    {{ bootstrap.load_css() }}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="container mt-5">
 
     <h1>Edit Trial</h1>
 
-    <form action="/update_trial/{{ trial.id }}" method="POST">
+   <form action="/update_trial/{{ trial.id }}" method="POST" enctype="multipart/form-data">
 
         <div class="mb-3">
             <label class="form-label">Crop</label>
@@ -29,6 +29,41 @@
                 <option value="Completed" {% if trial.status == "Completed" %}selected{% endif %}>Completed</option>
             </select>
         </div>
+
+        {% if trial.media_filename %}
+
+      <div class="mb-3">
+        <label class="form-label">Objective</label>
+        <input type="text" name="objective" class="form-control" value="{{ trial.objective }}">
+     </div>
+
+     <div class="mb-3">
+        <label class="form-label">Notes</label>
+        <textarea name="notes" class="form-control" rows="3">{{ trial.notes }}</textarea>
+     </div>
+
+      {% endif %}
+
+      <div class="mb-3">
+        <label class="form-label">Current Image</label><br>
+        <img
+
+          src="http://127.0.0.1:8000/uploads/{{ trial.media_filename }}"
+
+          width="200"
+
+          style="border-radius: 8px;"
+
+        >
+      </div>
+
+      <div class="mb-3">
+
+        <label class="form-label">Change Image (optional)</label>
+
+        <input type="file" name="media" class="form-control">
+
+      </div>
 
         <button type="submit" class="btn btn-primary">Save Changes</button>
         <a href="/" class="btn btn-secondary">Cancel</a>

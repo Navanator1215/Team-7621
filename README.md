@@ -39,6 +39,8 @@ Open a second terminal:
 
 ```bash
 
+With your Python virtual environment running.
+
 cd frontend/src
 
 python app.py

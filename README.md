@@ -25,11 +25,9 @@ This project simulates an R&D trial management platform for agricultural researc
 ## 1. Start the backend
 
 ```bash
+With your Python virtual environment running.
 
 cd backend
-
-python3 -m venv venv
-source venv/bin/activate
 
 python main.py
 

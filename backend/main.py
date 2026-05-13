@@ -1,3 +1,17 @@
+"""
+Course: CST 205 
+Title: Driscoll's R&D Platform
+Authors: Juan Zuniga, , Alan Olvera, Antonio Navarro, David J Salinas-Villafuerte
+Date: May 13, 2026
+
+GitHub Repository:
+https://github.com/your-username/your-repository
+
+Description:
+This backend API manages trial data, database operations,
+file uploads, and CRUD routes.
+"""
+
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from werkzeug.utils import secure_filename

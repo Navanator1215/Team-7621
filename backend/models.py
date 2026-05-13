@@ -1,3 +1,19 @@
+"""
+Course: CST 205
+Title: Driscoll's R&D Platform
+Authors: Juan Zavala, Alan Olvera, Antonio Navarro, David J. Salinas-Villafuerte
+Date: May 13, 2026
+
+GitHub Repository:
+https://github.com/your-username/your-repository
+
+Description:
+This file defines the Trial database model used by the backend API.
+The model represents a field trial and stores important information
+such as crop, variety, location, objective, season, status, notes,
+and uploaded media details.
+"""
+
 from database import db
 
 

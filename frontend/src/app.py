@@ -1,3 +1,20 @@
+"""
+Course: CST 205
+Title: Driscoll's R&D Platform
+Authors: Juan Zavala, Alan Olvera, Antonio Navarro, David J. Salinas-Villafuerte
+Date: May 13, 2026
+
+GitHub Repository:
+https://github.com/your-username/your-repository
+
+Description:
+This frontend Flask application displays the user interface for the
+R&D trial management platform. It connects to the backend API to
+create, view, edit, update, delete, search, and filter trial records.
+It also sends uploaded media files from the frontend form to the
+backend for storage.
+"""
+
 from flask import Flask, render_template, request, redirect, url_for
 import requests
 

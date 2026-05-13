@@ -10,7 +10,7 @@
 CST 205 - Multimedia Design & Programming. 
 
 ## Date
-May 2026
+May 13, 2026
 
 ## Project Description
 Driscoll's R&D Platform is a Flask-based web application for managing agricultural field trials. Users can create, view, edit, delete, search, and filter trial records. The app also supports media uploads so users can attach images to trials.

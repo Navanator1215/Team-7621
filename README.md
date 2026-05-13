@@ -66,6 +66,15 @@ https://github.com/your-username/your-repository](https://github.com/Navanator12
 ```
 ---
 
+---
+
+# Trello Board
+
+```txt
+[https://github.com/your-username/your-repository](https://github.com/Navanator1215/Team-7621.git](https://trello.com/b/9zNuCDYs/team-7621-project-board)
+```
+---
+
 # Future Work
 
 - Add AI-generated recommendations from trial notes

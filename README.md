@@ -10,7 +10,7 @@
 CST 205 - Multimedia Design & Programming. 
 
 ## Date
-May 2026
+May 13, 2026
 
 ## Project Description
 Driscoll's R&D Platform is a Flask-based web application for managing agricultural field trials. Users can create, view, edit, delete, search, and filter trial records. The app also supports media uploads so users can attach images to trials.
@@ -25,11 +25,9 @@ This project simulates an R&D trial management platform for agricultural researc
 ## 1. Start the backend
 
 ```bash
+With your Python virtual environment running.
 
 cd backend
-
-python3 -m venv venv
-source venv/bin/activate
 
 python main.py
 
@@ -40,6 +38,8 @@ python main.py
 Open a second terminal:
 
 ```bash
+
+With your Python virtual environment running.
 
 cd frontend/src
 
@@ -63,6 +63,15 @@ http://127.0.0.1:5000
 
 ```txt
 https://github.com/your-username/your-repository](https://github.com/Navanator1215/Team-7621.git
+```
+---
+
+---
+
+# Trello Board
+
+```txt
+https://trello.com/b/9zNuCDYs/team-7621-project-board
 ```
 ---
 

@@ -26,7 +26,7 @@ This project simulates an R&D trial management platform for agricultural researc
 - Worked on the frontend Flask routes for creating, displaying, editing, and deleting trials.
 - Built and connected the related HTML pages for creating, displaying, editing, and deleting trials.
 - Helped design the database model for the trial table.
-- Worked on the dashboard summary cards displayed at the top of the page.
+- Created Proper Documentation (README file).  
   
 ### Alan Olvera
 - Built the Flask API.

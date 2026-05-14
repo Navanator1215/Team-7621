@@ -1,15 +1,20 @@
 """
 Course: CST 205 
 Title: Driscoll's R&D Platform
-Authors: Juan Zuniga, , Alan Olvera, Antonio Navarro, David J Salinas-Villafuerte
-Date: May 13, 2026
+Authors: Juan Zavala, Alan Olvera, Antonio Navarro, David J Salinas-Villafuerte
+Date: May 14, 2026
 
 GitHub Repository:
-https://github.com/your-username/your-repository
+https://github.com/Navanator1215/Team-7621.git
 
 Description:
 This backend API manages trial data, database operations,
 file uploads, and CRUD routes.
+
+Team Contribtuions for this file: 
+
+Alan Olvera and Antonio Navarro- Worked on making the FLask API that our frontend uses. 
+
 """
 
 from flask import Flask, jsonify, request, send_from_directory
@@ -28,6 +33,8 @@ DATABASE_PATH = os.path.join(BASE_DIR, "trials.db")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 app = Flask(__name__)
+
+# Configure the Flask app with database and upload settings
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///trials.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
@@ -42,15 +49,18 @@ def home():
 
 @app.route("/uploads/<path:filename>")
 def uploaded_file(filename):
+    # Serve uploaded media files from the uploads directory
     return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
 @app.route("/trials", methods=["GET"])
 def get_trials():
+    # Retrieve all trials from the database, ordered by most recent first
     trials = Trial.query.order_by(Trial.id.desc()).all()
     return jsonify([trial.to_dict() for trial in trials])
 
 @app.route("/trials", methods=["POST"])
 def create_trial():
+    # Gather form data from the request to create a new trial record
     crop = request.form.get("crop", "").strip()
     variety = request.form.get("variety", "").strip()
     location = request.form.get("location", "").strip()
@@ -66,6 +76,7 @@ def create_trial():
     media_filename = None
     media_type = None
 
+    # Handle media file upload if a file is provided
     if media and media.filename:
         media_filename = secure_filename(media.filename)
         save_path = os.path.join(app.config["UPLOAD_FOLDER"], media_filename)
@@ -90,6 +101,7 @@ def create_trial():
         media_type=media_type,
     )
 
+    # Save the new trial record to the database
     db.session.add(trial)
     db.session.commit()
 
@@ -99,6 +111,7 @@ def create_trial():
 def update_trial(trial_id):
     trial = Trial.query.get_or_404(trial_id)
 
+    # Update trial fields with form data, using existing values as defaults
     trial.crop = request.form.get("crop", trial.crop).strip()
     trial.variety = request.form.get("variety", trial.variety).strip()
     trial.location = request.form.get("location", trial.location).strip()
@@ -109,6 +122,7 @@ def update_trial(trial_id):
 
     media = request.files.get("media")
 
+    # Handle media file upload if a new file is provided
     if media and media.filename:
         media_filename = secure_filename(media.filename)
         save_path = os.path.join(app.config["UPLOAD_FOLDER"], media_filename)
@@ -128,6 +142,7 @@ def update_trial(trial_id):
 
 @app.route("/trials/<int:trial_id>", methods=["DELETE"])
 def delete_trial(trial_id):
+    # Delete the trial record with the specified ID from the database
     trial = Trial.query.get_or_404(trial_id)
     db.session.delete(trial)
     db.session.commit()

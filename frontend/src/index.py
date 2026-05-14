@@ -1,3 +1,22 @@
+"""
+Course: CST 205
+Title: Driscoll's R&D Platform
+Authors: Juan Zavala, Alan Olvera, Antonio Navarro, David J. Salinas-Villafuerte
+Date: May 14, 2026
+
+GitHub Repository:
+https://github.com/Navanator1215/Team-7621.git
+
+Description:
+This file defines the Theme class that manages light/dark mode colors and fonts for the frontend UI.
+
+Team Contribuitons for this file: 
+
+David J. Salinas-Villafuerte - Worked on creating the Theme class that manages light/dark mode colors and fonts for the frontend UI.
+(Still needs implementation in the actual frontend routes and templates, but the class is defined here for future use.)
+
+"""
+
 # index.py
 
 class Theme:

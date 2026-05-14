@@ -2,10 +2,10 @@
 Course: CST 205
 Title: Driscoll's R&D Platform
 Authors: Juan Zavala, Alan Olvera, Antonio Navarro, David J. Salinas-Villafuerte
-Date: May 13, 2026
+Date: May 14, 2026
 
 GitHub Repository:
-https://github.com/your-username/your-repository
+https://github.com/Navanator1215/Team-7621.git
 
 Description:
 This frontend Flask application displays the user interface for the
@@ -13,6 +13,19 @@ R&D trial management platform. It connects to the backend API to
 create, view, edit, update, delete, search, and filter trial records.
 It also sends uploaded media files from the frontend form to the
 backend for storage.
+
+Team Contribuitons for this file: 
+Juan Zavala: - Worked on the frontend routes, for creating/displaying/editing/deleting a trial 
+as well as their respective html files. 
+
+Alan Olvera- Worked on displayiing cards with trial information at the top of the screen and 
+also worked on adding the search/filter functionalty for the displayed trials. 
+
+Antonio Navarro - Worked on the UI design for the frontend routes (and their respectuve 
+html files). 
+
+David J. Salinas-Villafuerte - Worked also worked on the UI design for the routes as well.
+
 """
 
 from flask import Flask, render_template, request, redirect, url_for
@@ -22,7 +35,9 @@ app = Flask(__name__)
 
 API_URL = "http://127.0.0.1:8000/trials"
 
-
+# Home route:
+# Gets all trials from the backend API, applies search/status filters,
+# calculates dashboard summary values, and sends the data to home.html.
 @app.route("/")
 def home():
     # keep original text for display
@@ -32,6 +47,7 @@ def home():
     # lowercase version only for filtering
     search_lower = search.lower()
 
+    # Get all trials from backend API
     try:
         res = requests.get(API_URL)
         res.raise_for_status()
@@ -41,6 +57,7 @@ def home():
 
     filtered_trials = []
 
+    # Apply search and status filters
     for trial in trials:
         crop = str(trial.get("crop", "")).lower()
         variety = str(trial.get("variety", "")).lower()
@@ -82,6 +99,7 @@ def home():
 
 @app.route("/create_trial", methods=["POST"])
 def create_trial():
+    # Gather form data
     form_data = {
         "crop": request.form.get("crop", "").strip(),
         "variety": request.form.get("variety", "").strip(),
@@ -93,6 +111,8 @@ def create_trial():
     }
 
     files = {}
+
+    # Handle media file upload
     media = request.files.get("media")
     if media and media.filename:
         files["media"] = (media.filename, media.stream, media.mimetype)
@@ -107,6 +127,7 @@ def create_trial():
 
 @app.route("/delete_trial/<int:trial_id>", methods=["POST"])
 def delete_trial(trial_id):
+    # Attempt to delete the trial via the backend API
     try:
         requests.delete(f"{API_URL}/{trial_id}")
     except requests.exceptions.RequestException:
@@ -125,6 +146,7 @@ def edit_trial(trial_id):
 
     trial_to_edit = None
 
+    # Find the trial with the matching ID
     for trial in trials:
 
         if trial["id"] == trial_id:
@@ -144,10 +166,10 @@ def update_trial(trial_id):
         "objective": request.form.get("objective"),
         "notes": request.form.get("notes")
     }
-
     media = request.files.get("media")
 
     files = {}
+    # Handle media file upload if a new file is provided
     if media and media.filename:
         files["media"] = (media.filename, media.stream, media.mimetype)
 

@@ -23,11 +23,13 @@
       <h2 class="mb-0">Field Trials</h2>
     </div>
 
+    <!-- Search and filter form -->
     {% include "partials/search_filter.html" %}
 
     <div class="card shadow-sm mt-4">
       <div class="card-body">
 
+        <!-- Table to display trials, or a message if no trials are found -->
         {% if trials %}
         <div class="table-responsive">
           <table class="table table-striped align-middle">

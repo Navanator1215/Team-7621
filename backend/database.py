@@ -13,7 +13,7 @@ This file creates the SQLAlchemy database object used by the backend.
 
 Team Contributions for this file:
 
-Alan Olvera - Created and managed the database setup in this file.
+Antonio Navarro - Created and managed the database setup in this file.
 """
 
 from sqlalchemy import create_engine

@@ -1,5 +1,5 @@
 """
-Course: CST 205 
+Course: CST 205 - Multimedia Design & Programming.
 Title: Driscoll's R&D Platform
 Authors: Juan Zavala, Alan Olvera, Antonio Navarro, David J Salinas-Villafuerte
 Date: May 14, 2026
